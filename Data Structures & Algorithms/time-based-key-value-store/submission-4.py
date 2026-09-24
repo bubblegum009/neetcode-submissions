@@ -1,0 +1,27 @@
+class TimeMap:
+
+    def __init__(self):
+        #Initialise the map
+        self.timestore=defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        #Append values to the map
+        self.timestore[key].append([timestamp,value])
+
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.timestore:
+            return ""
+        #Get the array to check
+        arr=self.timestore[key]
+
+        low=0
+        high=len(arr)-1
+        while(low<=high):
+            mid=(low+high)//2
+            if arr[mid][0]==timestamp:
+                return arr[mid][1]
+            elif(arr[mid][0]<timestamp):
+                low=mid+1
+            else:
+                high=mid-1
+        return arr[high][1] if high>=0 else ""
